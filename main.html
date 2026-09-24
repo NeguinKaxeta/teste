@@ -1,123 +1,193 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página de Teste - Widget Helena</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            background-color: #f4f6f8;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        header {
-            background-color: #1a202c;
-            color: #ffffff;
-            padding: 2rem 1rem;
-            text-align: center;
-        }
-        header h1 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-        header p {
-            color: #a0aec0;
-            font-size: 1rem;
-        }
-        main {
-            flex: 1;
-            max-width: 800px;
-            width: 100%;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-        .card {
-            background: #ffffff;
-            border-radius: 8px;
-            padding: 2rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            margin-bottom: 1.5rem;
-        }
-        .card h2 {
-            margin-bottom: 1rem;
-            color: #2d3748;
-        }
-        .status-badge {
-            display: inline-block;
-            background-color: #e6fffa;
-            color: #234e52;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-        /* Estilo para destacar o botão na página */
-        .h-widget-trigger {
-            background-color: #3182ce;
-            color: #ffffff;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-            margin-top: 1.5rem;
-            display: inline-block;
-        }
-        .h-widget-trigger:hover {
-            background-color: #2b6cb0;
-        }
-        footer {
-            text-align: center;
-            padding: 1.5rem;
-            background-color: #e2e8f0;
-            color: #718096;
-            font-size: 0.875rem;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Teste do widget de contato</title>
+
+  <!-- Diagnóstico: escuta o carregamento/erro do script do widget sem alterar a tag original -->
+  <script>
+    window.__hw = { log: [], scriptStatus: 'aguardando', t0: performance.now() };
+    function hwLog(msg, tipo) {
+      var t = ((performance.now() - window.__hw.t0) / 1000).toFixed(2) + 's';
+      window.__hw.log.push({ t: t, msg: msg, tipo: tipo || 'info' });
+      console.log('[widget-teste ' + t + '] ' + msg);
+      if (window.hwRender) window.hwRender();
+    }
+    function ehScriptWidget(el) {
+      return el && el.tagName === 'SCRIPT' && (el.src || '').indexOf('h-widget') !== -1;
+    }
+    document.addEventListener('load', function (e) {
+      if (ehScriptWidget(e.target)) {
+        window.__hw.scriptStatus = 'ok';
+        hwLog('Script do widget carregado com sucesso.', 'ok');
+      }
+    }, true);
+    window.addEventListener('error', function (e) {
+      if (ehScriptWidget(e.target)) {
+        window.__hw.scriptStatus = 'erro';
+        hwLog('Falha ao baixar o script do widget (rede, bloqueio ou URL).', 'erro');
+      }
+    }, true);
+  </script>
+
+  <!-- Script do widget (conforme solicitado) -->
+  <script
+    type="application/javascript"
+    src= "https://cdn.helena.run/scripts/widget/v3/h-widget-min.js"
+    data-widget="teste-dois-a9fd7c"
+  ></script>
+
+  <style>
+    :root {
+      --fundo: #eef2f0;
+      --texto: #1c2b27;
+      --suave: #5b6e68;
+      --linha: #cfd9d5;
+      --acento: #1f6f5c;
+      --ok: #1e7a45;
+      --erro: #b3261e;
+      --aviso: #946200;
+      --painel: #ffffff;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --fundo: #16201d; --texto: #e4ece9; --suave: #9fb2ab; --linha: #2e3d38;
+        --acento: #5cc4a6; --ok: #5fd08e; --erro: #ff8a80; --aviso: #f0c35a; --painel: #1d2a26;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--fundo); color: var(--texto);
+      font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+      line-height: 1.5;
+    }
+    main { max-width: 720px; margin: 0 auto; padding: 48px 20px 80px; }
+    h1 { font-size: 1.75rem; margin: 0 0 8px; }
+    p.sub { color: var(--suave); margin: 0 0 32px; }
+
+    .h-widget-trigger {
+      font: inherit; font-weight: 600; font-size: 1.05rem;
+      padding: 14px 28px; border: 0; border-radius: 999px;
+      background: var(--acento); color: #fff; cursor: pointer;
+    }
+    .h-widget-trigger:hover { filter: brightness(1.08); }
+    .h-widget-trigger:focus-visible { outline: 3px solid var(--texto); outline-offset: 3px; }
+
+    .painel {
+      margin-top: 40px; background: var(--painel);
+      border: 1px solid var(--linha); border-radius: 12px; padding: 20px;
+    }
+    .painel h2 { font-size: 1.05rem; margin: 0 0 12px; }
+    .check { display: flex; gap: 10px; align-items: baseline; padding: 6px 0; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; flex: none; background: var(--linha); transform: translateY(1px); }
+    .dot.ok { background: var(--ok); } .dot.erro { background: var(--erro); } .dot.aviso { background: var(--aviso); }
+    .check small { color: var(--suave); display: block; }
+    ol.log {
+      margin: 16px 0 0; padding: 12px 12px 12px 32px; max-height: 220px; overflow: auto;
+      font-family: ui-monospace, Consolas, monospace; font-size: .82rem;
+      background: var(--fundo); border-radius: 8px;
+    }
+    ol.log li.ok { color: var(--ok); } ol.log li.erro { color: var(--erro); } ol.log li.aviso { color: var(--aviso); }
+  </style>
 </head>
 <body>
+  <main>
+    <h1>Teste do widget de contato</h1>
+    <p class="sub">Widget <code>teste-dois-a9fd7c</code>. Clique no botão abaixo e acompanhe as verificações.</p>
 
-    <header>
-        <h1>Página de Teste de Integração</h1>
-        <p>Validação do Script do Widget Helena</p>
-    </header>
+    <!-- Botão (conforme solicitado) -->
+    <button type="button" class="h-widget-trigger">
+      Entrar em contato
+    </button>
 
-    <main>
-        <div class="card">
-            <span class="status-badge">● Script Inserido</span>
-            <h2>Ambiente de Testes</h2>
-            <p>Esta é uma página de teste para verificar se o widget carrega corretamente na interface.</p>
-            <p>Clique no botão abaixo para acionar o widget configurado:</p>
+    <section class="painel" aria-live="polite">
+      <h2>Verificações</h2>
+      <div class="check"><span class="dot" id="d-script"></span><div><strong>1. Script no header</strong><small id="s-script">Aguardando…</small></div></div>
+      <div class="check"><span class="dot" id="d-widget"></span><div><strong>2. Widget injetado na página</strong><small id="s-widget">Aguardando…</small></div></div>
+      <div class="check"><span class="dot" id="d-botao"></span><div><strong>3. Botão abre o widget</strong><small id="s-botao">Clique em "Entrar em contato" para testar.</small></div></div>
+      <ol class="log" id="log"></ol>
+    </section>
+  </main>
 
-            <!-- Botão inserido abaixo -->
-            <button type="button" class="h-widget-trigger">
-                Entrar em contato
-            </button>
-        </div>
-    </main>
+  <script>
+    (function () {
+      var estado = { widgetNodes: [], clicado: false, abriu: null };
+      var $ = function (id) { return document.getElementById(id); };
 
-    <footer>
-        <p>Página de teste gerada em HTML5</p>
-    </footer>
+      function set(dot, txt, classe, texto) {
+        $(dot).className = 'dot ' + (classe || '');
+        $(txt).textContent = texto;
+      }
 
-    <!-- Script de Teste Helena Widget -->
-    <script
-      type="application/javascript"
-      src="https://cdn.helena.run/scripts/widget/v3/h-widget-min.js"
-      data-widget="teste-dois-a9fd7c"
-    ></script>
+      window.hwRender = function () {
+        var s = window.__hw.scriptStatus;
+        if (s === 'ok') set('d-script', 's-script', 'ok', 'Script baixado e executado.');
+        else if (s === 'erro') set('d-script', 's-script', 'erro', 'Não foi possível baixar o script. Verifique a rede, bloqueadores de anúncio ou a URL.');
 
+        if (estado.widgetNodes.length) set('d-widget', 's-widget', 'ok', estado.widgetNodes.length + ' elemento(s) do widget adicionados à página.');
+
+        if (estado.clicado) {
+          if (estado.abriu === true) set('d-botao', 's-botao', 'ok', 'Após o clique, o widget abriu (mudança detectada na interface).');
+          else if (estado.abriu === false) set('d-botao', 's-botao', 'erro', 'Nenhuma mudança detectada após o clique. Veja o console (F12).');
+          else set('d-botao', 's-botao', 'aviso', 'Clique registrado, verificando…');
+        }
+
+        var ol = $('log'); ol.innerHTML = '';
+        window.__hw.log.forEach(function (l) {
+          var li = document.createElement('li'); li.className = l.tipo;
+          li.textContent = l.t + '  ' + l.msg; ol.appendChild(li);
+        });
+        ol.scrollTop = ol.scrollHeight;
+      };
+
+      // Detecta tudo que o widget adiciona fora do conteúdo desta página
+      var mudancasAposClique = 0;
+      var obs = new MutationObserver(function (muts) {
+        muts.forEach(function (m) {
+          m.addedNodes.forEach(function (n) {
+            if (n.nodeType !== 1 || n.closest && n.closest('main')) return;
+            if (n.tagName === 'SCRIPT' || n.tagName === 'STYLE' || n.tagName === 'LINK') return;
+            estado.widgetNodes.push(n);
+            hwLog('Elemento injetado: <' + n.tagName.toLowerCase() + (n.id ? ' id="' + n.id + '"' : '') +
+              (n.className && typeof n.className === 'string' ? ' class="' + n.className + '"' : '') + '>', 'ok');
+          });
+          if (estado.clicado && !(m.target.closest && m.target.closest('main'))) mudancasAposClique++;
+        });
+        window.hwRender();
+      });
+      obs.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['class', 'style', 'hidden', 'open', 'aria-hidden'] });
+
+      // Clique no botão
+      document.querySelector('.h-widget-trigger').addEventListener('click', function () {
+        estado.clicado = true; estado.abriu = null; mudancasAposClique = 0;
+        hwLog('Botão "Entrar em contato" clicado.');
+        setTimeout(function () {
+          estado.abriu = mudancasAposClique > 0;
+          hwLog(estado.abriu ? 'Widget reagiu ao clique (' + mudancasAposClique + ' mudança(s) na interface).'
+                             : 'Nenhuma reação do widget ao clique em 1,5s.', estado.abriu ? 'ok' : 'erro');
+          window.hwRender();
+        }, 1500);
+        window.hwRender();
+      });
+
+      // Aviso caso nada aconteça
+      setTimeout(function () {
+        if (window.__hw.scriptStatus === 'aguardando') {
+          hwLog('Script ainda sem resposta após 8s.', 'aviso');
+          set('d-script', 's-script', 'aviso', 'Sem resposta após 8s.');
+        }
+        if (!estado.widgetNodes.length && window.__hw.scriptStatus === 'ok') {
+          hwLog('Script carregou, mas nenhum elemento do widget apareceu. Confirme o ID "teste-dois-a9fd7c" e o domínio autorizado na Helena.', 'aviso');
+          set('d-widget', 's-widget', 'aviso', 'Nenhum elemento injetado. Confira o ID do widget e o domínio autorizado.');
+        }
+      }, 8000);
+
+      if (location.protocol === 'file:') {
+        hwLog('Página aberta via file://. Alguns widgets só funcionam servidos por http(s) — use um servidor local se falhar.', 'aviso');
+      }
+      window.hwRender();
+    })();
+  </script>
 </body>
 </html>
