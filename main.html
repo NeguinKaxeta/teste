@@ -61,6 +61,23 @@
             font-weight: 600;
             margin-bottom: 1rem;
         }
+        /* Estilo para destacar o botão na página */
+        .h-widget-trigger {
+            background-color: #3182ce;
+            color: #ffffff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin-top: 1.5rem;
+            display: inline-block;
+        }
+        .h-widget-trigger:hover {
+            background-color: #2b6cb0;
+        }
         footer {
             text-align: center;
             padding: 1.5rem;
@@ -82,12 +99,13 @@
             <span class="status-badge">● Script Inserido</span>
             <h2>Ambiente de Testes</h2>
             <p>Esta é uma página de teste para verificar se o widget carrega corretamente na interface.</p>
-            <p>Se o widget for flutuante ou um chat, verifique no canto inferior da tela se ele é renderizado.</p>
+            <p>Clique no botão abaixo para acionar o widget configurado:</p>
+
+            <!-- Botão inserido abaixo -->
+            <button type="button" class="h-widget-trigger">
+                Entrar em contato
+            </button>
         </div>
-        
-      <button type="button" class="h-widget-trigger">
-        Entrar em contato
-      </button>
     </main>
 
     <footer>
